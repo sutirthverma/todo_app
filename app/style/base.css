@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main{
+    background-color: white;
+}
+
+.input > div,  input{
+    background-color: lightgrey;
+}
+
+.display-none{
+    display: none;
+}
