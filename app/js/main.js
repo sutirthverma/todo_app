@@ -1,28 +1,37 @@
+let key = 'list';
 let add = document.querySelector('button');
 let textfield = document.querySelector('.textfield');
 let list = document.querySelector('ul');
 let list_item = document.querySelectorAll('li');
 let no_tasks = document.querySelector('.no-tasks');
-let todo_list = [];
 
-//Check or uncheck task
-function listOperation(){
-    list_item.forEach((item, index) => {
-        generateEventListner(item, index);
-        }
-    );
-}
+let todo_list = 
+    localStorage.getItem(key) !== null 
+    ? JSON.parse(localStorage.getItem(key)) 
+    : [];
+
+
 
 function generateEventListner(item, index){
     item.addEventListener('click', function (){
         if(item.classList.contains('unchecked')){
             item.classList.replace('unchecked', 'checked');
             item.querySelector('img').src = '/assets/checked.png';
+            console.log(index);
+            todo_list[index].isActive = true;
+    localStorage.setItem(key, JSON.stringify(todo_list));
+
         }else{
             item.classList.replace('checked', 'unchecked');
-            item.querySelector('img').src = '/assets/unchecked.png';
+            item.querySelector('img').src = '/assets/unchecked.png';            
+            console.log(index);
+            todo_list[index].isActive = false;
+    localStorage.setItem(key, JSON.stringify(todo_list));
+
         }
     })
+
+    if(todo_list.length > 0){
 
     item.querySelector('.cross').addEventListener('click', function(){
         item.remove();
@@ -32,15 +41,25 @@ function generateEventListner(item, index){
             no_tasks.classList.remove('display-none');
         }
         console.log(todo_list);
+    localStorage.setItem(key, JSON.stringify(todo_list));
+
     })
+
+}
 }
 
 
 add.addEventListener('click', function(){
+
+    if(textfield.value.length <= 0){
+        return;
+    }
+
     let todo = new Object();
     todo.title = textfield.value;
     todo.isActive = false;
     todo_list.push(todo);
+    localStorage.setItem(key, JSON.stringify(todo_list));
 
     if(!no_tasks.classList.contains('display-none')){
         no_tasks.classList.add('display-none');
@@ -50,13 +69,13 @@ add.addEventListener('click', function(){
     textfield.value = '';
 })
 
-function appendInList(title){
+function appendInList(title, check, index){
     let li = document.createElement('li');
     li.classList.add('unchecked');
 
     let checkboxImg = document.createElement('img');
     checkboxImg.classList.add('checkbox');
-    checkboxImg.src = '/assets/unchecked.png';
+    checkboxImg.src = (check) ?  '/assets/checked.png' : '/assets/unchecked.png';
 
     let p = document.createElement('p');
     p.textContent = title;
@@ -70,18 +89,15 @@ function appendInList(title){
     li.appendChild(cross);
 
     list.appendChild(li);
-    generateEventListner(li);
+    generateEventListner(li, index);
 }
 
-// function showList(){
-//     todo_list.forEach(element => {
-//         let element = document.createElement(li);
-//         element.classList.add('unchecked');
-        
-//         list.appendChild()
-//     });
-// }
 
-if(todo_list.length > 0){
-    listOperation();
-}
+todo_list.forEach((element, index) => {
+
+    if(!no_tasks.classList.contains('display-none')){
+        no_tasks.classList.add('display-none');
+    }
+
+    appendInList(element.title, element.isActive, index)    
+});
