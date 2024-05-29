@@ -43,14 +43,14 @@ function generateEventListner(item, index) {
     item.addEventListener('click', function () {
         if (item.classList.contains('unchecked')) {
             item.classList.replace('unchecked', 'checked');
-            item.querySelector('img').src = '/assets/checked.png';
+            item.querySelector('img').src = 'assets/checked.png';
             console.log(index);
             todo_list[index].isActive = true;
             localStorage.setItem(key, JSON.stringify(todo_list));
 
         } else {
             item.classList.replace('checked', 'unchecked');
-            item.querySelector('img').src = '/assets/unchecked.png';
+            item.querySelector('img').src = 'assets/unchecked.png';
             console.log(index);
             todo_list[index].isActive = false;
             localStorage.setItem(key, JSON.stringify(todo_list));
