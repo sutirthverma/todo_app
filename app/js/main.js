@@ -83,14 +83,14 @@ function appendInList(title, check, index) {
 
     let checkboxImg = document.createElement('img');
     checkboxImg.classList.add('checkbox');
-    checkboxImg.src = (check) ? '/assets/checked.png' : '/assets/unchecked.png';
+    checkboxImg.src = (check) ? 'assets/checked.png' : 'assets/unchecked.png';
 
     let p = document.createElement('p');
     p.textContent = title;
 
     let cross = document.createElement('img');
     cross.classList.add('cross');
-    cross.src = '/assets/cross.svg';
+    cross.src = 'assets/cross.svg';
 
     li.appendChild(checkboxImg);
     li.appendChild(p);
